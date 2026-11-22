@@ -1,0 +1,44 @@
+# Opens one PR per package with a newer tag than its pin. It never merges: the PR is the review
+# request, with a compare link. check.yml runs on the PR and shows any derived-field changes.
+name: propose
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  propose:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TOOL: github.com/brohd11/gdsh-pkg/cmd/gdsh-manifest@v0.1.0
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - name: Open bump PRs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          go run "$TOOL" propose --tsv > proposals.tsv
+          while IFS=$'\t' read -r name repo from to compare; do
+            branch="bump/$name-$to"
+            if git ls-remote --exit-code --heads origin "$branch" >/dev/null; then
+              echo "$branch already proposed"; continue
+            fi
+            git switch -c "$branch" origin/main
+            # pin fails on a package that no longer passes; the PR is still opened to show why.
+            go run "$TOOL" pin "$name" "$to" > pin.log 2>&1 || true
+            git add manifest.json
+            git commit -m "bump $name $from -> $to" --allow-empty
+            git push origin "$branch"
+            gh pr create --base main --head "$branch" --title "bump $name $from -> $to" --body "$(printf 'Review before merging: this is what installs will serve.\n\n- Changes: %s\n- Repo: https://github.com/%s\n\n```\n%s\n```\n' "$compare" "$repo" "$(cat pin.log)")"
+            git switch main
+          done < proposals.tsv

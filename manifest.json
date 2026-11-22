@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "packages": [
+    {
+      "name": "level",
+      "repo": "brohd11/godot-gdsh-lib-level",
+      "summary": "Level building: probe ground, snap and scatter nodes onto it, world bounds",
+      "tags": [
+        "3d",
+        "level"
+      ],
+      "tag": "v0.1.0",
+      "commit": "b74c4d6169a5d41d2f340e16644ff24b91995c0e",
+      "gdsh": "v0.4.5",
+      "requires": []
+    },
+    {
+      "name": "terrain3d",
+      "repo": "brohd11/godot-gdsh-lib-terrain3d",
+      "summary": "Terrain3D tools: import heightmaps, set textures, flatten (needs the Terrain3D addon)",
+      "tags": [
+        "3d",
+        "terrain"
+      ],
+      "tag": "v0.1.0",
+      "commit": "f95576b8caa26b65980247f75572248665ec75e1",
+      "gdsh": "v0.4.5",
+      "requires": [
+        "brohd11/godot-gdsh-lib-level"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+# Every entry must pass at its pinned commit, and the derived fields must match package.cfg.
+# A failure here means: fix the package, re-pin, or run `gdsh-manifest check -w` locally.
+name: check
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - name: Check manifest.json
+        run: go run github.com/brohd11/gdsh-pkg/cmd/gdsh-manifest@v0.1.0 check
