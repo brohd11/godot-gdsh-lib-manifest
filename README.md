@@ -11,6 +11,11 @@ Each entry pins a `tag` and the `commit` it was reviewed at. Installs download t
 nothing reaches users until a person moves the pin, and a moved tag can't change what is
 served. Only pinned packages can be installed by name.
 
+A package whose release export bundles what its source lacks (vendored libraries) sets `asset`:
+installs then download that file of the pinned tag's release instead of the source. A release
+asset can be replaced under the same tag, so `pin` also records its `sha256`, and installs and
+`check` refuse an asset that no longer matches.
+
 ## Entries
 
 ```json
@@ -21,14 +26,17 @@ served. Only pinned packages can be installed by name.
   "tags": ["3d", "terrain"],
   "tag": "v0.1.1",                           // the reviewed pin...
   "commit": "<sha>",                         // ...and the commit it pointed at
+  "asset": "terrain3d.zip",                  // optional: install this release asset instead
+  "sha256": "<hex>",                         // the asset's digest at review (set by pin)
   "gdsh": "v0.4.5",                          // derived: minimum gdsh
   "requires": ["brohd11/godot-gdsh-lib-level"], // derived: indexed gdsh packages
   "project_only": []                         // derived: non-gdsh requires (refused in command roots)
 }
 ```
 
-You write `name`, `repo`, `summary`, `tags` and the pin. The derived fields come from
-`package.cfg` at the pinned commit. A package qualifies when it has `cmd/manifest.gd` and makes
+You write `name`, `repo`, `summary`, `tags`, `asset` if any, and the pin. The derived fields come from
+`package.cfg` at the pinned commit, or in the release asset when there is one. Libraries an
+export bundles (listed in its `.export_lock.json`) are not counted as requires. A package qualifies when it has `cmd/manifest.gd` and makes
 no absolute `res://addons/_lib/gdsh...` references outside it, because those folders don't
 exist in a command root. Find dependencies as siblings instead.
 
