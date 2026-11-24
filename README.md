@@ -1,7 +1,7 @@
 # godot-gdsh-lib-manifest
 
 The reviewed index of gdsh command packages that installers serve:
-`mcp_sh_godot gdsh install NAME` today, and `gdsh_cli package install` later. Packages land in a
+`gdsh package install NAME` and `mcp_sh_godot gdsh package install NAME`. Packages land in a
 command root (`~/.gdsh/packages/<name>`, `~/.mcp-sh/godot/packages/<name>` or a project's),
 with their dependencies installed as siblings.
 
@@ -17,7 +17,7 @@ served. Only pinned packages can be installed by name.
 {
   "name": "terrain3d",                       // install folder; must match package.cfg path's basename
   "repo": "brohd11/godot-gdsh-lib-terrain3d",
-  "summary": "...",                          // shown by `gdsh search`
+  "summary": "...",                          // shown by `gdsh package search`
   "tags": ["3d", "terrain"],
   "tag": "v0.1.1",                           // the reviewed pin...
   "commit": "<sha>",                         // ...and the commit it pointed at
