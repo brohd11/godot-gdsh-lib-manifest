@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ github.token }}
-      TOOL: github.com/brohd11/gdsh-pkg/cmd/gdsh-manifest@v0.1.0
+      TOOL: github.com/brohd11/gdsh-pkg/cmd/gdsh-manifest@v0.2.0
     steps:
       - uses: actions/checkout@v4
         with:

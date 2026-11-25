@@ -19,4 +19,4 @@ jobs:
         with:
           go-version: stable
       - name: Check manifest.json
-        run: go run github.com/brohd11/gdsh-pkg/cmd/gdsh-manifest@v0.1.0 check
+        run: go run github.com/brohd11/gdsh-pkg/cmd/gdsh-manifest@v0.2.0 check
