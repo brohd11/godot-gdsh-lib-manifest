@@ -9,9 +9,9 @@
         "3d",
         "level"
       ],
-      "tag": "v0.1.1",
-      "commit": "38f105401ed1ece93439b1f07d3bd9c569d405e0",
-      "gdsh": "v0.5.0",
+      "tag": "v0.1.2",
+      "commit": "b62a5fe545d92c0e38c2f3a39616b92420e7f9e2",
+      "gdsh": "v0.5.3",
       "requires": []
     },
     {
@@ -22,9 +22,9 @@
         "3d",
         "terrain"
       ],
-      "tag": "v0.1.1",
-      "commit": "6e7681feb7538604b77f9c7391658f74bfc27e10",
-      "gdsh": "v0.5.0",
+      "tag": "v0.2.3",
+      "commit": "dc26c8b350795d34a2ee6b494700d823d7888fd9",
+      "gdsh": "v0.5.3",
       "requires": [
         "brohd11/godot-gdsh-lib-level"
       ]
